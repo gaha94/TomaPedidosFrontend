@@ -29,11 +29,21 @@ export default function RootLayout({
   const hideSidebar = pathname === "/login" || pathname === "/register";
 
   return (
-    <html lang="es">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}>
-        {/* 🔹 Asegura que el Sidebar aparezca solo si está autenticado */}
-        {isAuthenticated && !hideSidebar && <Sidebar />}
-        <main className={`${isAuthenticated && !hideSidebar ? "ml-64" : ""} flex-1 p-6`}>
+    <html lang="es" className="w-full h-full">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex w-full min-h-screen`}>
+        {/* 🔹 Sidebar solo si el usuario está autenticado */}
+        {isAuthenticated && !hideSidebar && (
+          <div className="w-64 min-h-screen bg-gray-900 text-white fixed left-0 top-0">
+            <Sidebar />
+          </div>
+        )}
+
+        {/* 🔹 Contenido Principal */}
+        <main
+          className={`flex-1 p-6 w-full min-h-screen overflow-auto ${
+            isAuthenticated && !hideSidebar ? "ml-64" : ""
+          }`}
+        >
           {children}
         </main>
       </body>
